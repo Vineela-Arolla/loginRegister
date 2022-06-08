@@ -1,12 +1,15 @@
 const express=require("express");
 const bodyparser=require("body-parser");
-
+const bcrypt=require("bcrypt");
+const user=require('./model/user');
+const mongoose=require('mongoose');
 const app = express();
 const port = 80
+
 app.set('view engine', 'pug');
 
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended:true}));
+app.use(bodyparser.urlencoded({extended:true}))
 
 app.get('/',function(req,res){
 
@@ -38,30 +41,69 @@ app.post('/Register',function(req,res){
         }
         else{
          console.log(result);   
-        res.render("Login");
+        res.redirect("Login");
         }
     })
         })
-
         app.post('/Login',function(req,res){
+        
+            user.findOne({username:req.body.username},function(err,docs){
+                if(err)
+                {
+                    console.log(err)
+                
+                }
+                else
+                { app.post('/Login',function(req,res){
+        
+                    user.findOne({username:req.body.username},function(err,docs){
+                        if(err)
+                        {
+                            console.log(err)
+                        
+                        }
+                        else
+                        {
+                            if(docs.username==req.body.username)
+                            {
+                                bcrypt.compare(req.body.password,docs.password,function(err,data)
+                                {
+                                    if(err)
+                                    {
+                                        console.log(err);
+                                    }
+                                    if(data)
+                                    {
+                                        console.log(data);
+                                        res.send("Welcome");
+                                    }
+                                    else
+                                    {
+                                        res.send("invalid password");
+                                    }
             
-            user.findOne({username:"req.body.username"},function(err,docs){
-            if(err)
-            {
-                console.log(err)
-
-            }
-            else{
-                if(docs.username==req.body.username && docs.username==req.body.password){
-                    res.send("welcome");
-                }
-                else{
-                    //res.send("invalid username or password")
-                    res.redirect("Register");
-                }
-            }
-            })
-            })
+                                });
+                                
+            
+                               
+                                
+                            }
+                            else
+                            {
+                                //res.send("invalid username or password")
+                                res.redirect("Register");
+                            }
+            
+                        }
+            
+                    })
+                    
+            
+                    })
+                
+        
+        
     
+
 
 app.listen(port,() => {console.log(`app is listening on http://localhost:${port}`)})
