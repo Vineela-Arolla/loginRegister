@@ -1,0 +1,19 @@
+{
+  "name": "5c6",
+  "version": "1.0.0",
+  "description": "Registration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.3.5",
+    "multer": "^1.4.5-lts.1",
+    "node.js": "^0.0.1-security",
+    "nodemon": "^2.0.16",
+    "pug": "^3.0.2"
+  }
+}
